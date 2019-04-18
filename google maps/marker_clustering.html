@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title> Marker Clustering </title>
+    <!-- Style for map div -->
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map { height: 100%; }
+    </style>
+  </head>
+
+  <body>
+    <!-- map div -->
+    <div id="map"></div>
+
+    <!-- Js for map -->
+    <script>
+      function initMap() {
+        //--- set the latitude and longitude for map position ---//
+        var point = {lat : 23.754194, lng : 90.359391};
+        //--- set the center point of map and zoom ---//
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center : point,
+          zoom : 5
+        });
+        //--- Each character used to label the each marker ---//
+        var labels = 'DCKBSRMR';
+        //--- Add marker and label in the map ---//
+        var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position: location,
+            label: labels[i % labels.length]
+          });
+        });
+        //--- Add marker clustering image ---//
+        var markerCluster = new MarkerClusterer(map, markers, {
+          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        });
+      }
+
+      //--- set some location latitude and longitude ---//
+      var locations = [
+        {lat: 23.810331, lng: 90.412521},
+        {lat: 22.356852, lng: 91.783180},
+        {lat: 22.845640, lng: 89.540329},
+        {lat: 22.701002, lng: 90.353455},
+        {lat: 24.894930, lng: 91.868706},
+        {lat: 24.363588, lng: 88.624138},
+        {lat: 24.747149, lng: 90.420273},
+        {lat: 25.743893, lng: 89.275230}
+      ]
+    </script>
+
+    <!-- marker cluster js -->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <!-- The async defer allow the browser to render the page when API load
+    -- The key is the google api key provided for you
+    -- The callback execute the initMap() function -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=APP KEY&callback=initMap">
+    </script>
+  </body>
+</html>
